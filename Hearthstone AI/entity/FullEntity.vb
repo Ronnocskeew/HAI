@@ -1,0 +1,3 @@
+﻿Class FullEntity
+
+End Class
