@@ -14,7 +14,7 @@ Public Class Form1
     Private Sub Button1_Click(sender As Object, e As EventArgs) Handles Button1.Click
         For i = 1 To 300
             ReadLine()
-            Label1.Text = currLine
+            Label1.Text = currLine + 1
             TextBox2.Text = ""
             For Each ent In Entities
                 If ent.GetTag("zone") = "PLAY" Then
