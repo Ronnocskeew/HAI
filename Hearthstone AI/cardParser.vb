@@ -3,7 +3,7 @@ Imports System.Text.RegularExpressions
 Public Class cardParser
     Dim gameBoard As New board
     Dim lines As List(Of String)
-    Dim currLine As Integer = -1
+    Dim currLine As Integer = 0
     Dim LastEnt As BaseEntity
     Dim currentBlock As String
     Dim Entities As List(Of BaseEntity)
@@ -37,10 +37,13 @@ Public Class cardParser
     End Sub
 
     Private Sub ReadLine()
-        currLine += 1
         If currLine >= lines.Count Then Return
         Dim Line As String = lines(currLine)
+        currLine += 1
         Dim EntID As Integer
+        If Regex.IsMatch(Line, "CREATE_GAME") Then
+            Entities = New List(Of BaseEntity)
+        End If
         Dim BlockSearch As String = "TAG_CHANGE|HIDE_ENTITY|BLOCK_START BlockType=PLAY|BLOCK_START BlockType=ATTACK|BLOCK_START BlockType=TRIGGER|FULL_ENTITY|SHOW_ENTITY"
         If Regex.IsMatch(Line, BlockSearch) Then
             currentBlock = Regex.Match(Line, BlockSearch).Value
