@@ -15,15 +15,22 @@ Class BaseEntity
     End Sub
 
     Public Function SetTag(Tag As String, Value As String, Line As String) As Boolean Implements IEntity.SetTag
-        If Tags.ContainsKey(Tag) = False Then
-            Tags.Add(Tag, Value)
-            Lines.Add(Tag, Line)
+        If Tags.ContainsKey(Tag.ToUpper) = False Then
+            Tags.Add(Tag.ToUpper, Value)
+            Lines.Add(Tag.ToUpper, Line)
             Return False
         Else
-            Tags(Tag) = Value
-            Lines(Tag) = Line
+            Tags(Tag.ToUpper) = Value
+            Lines(Tag.ToUpper) = Line
             Return False
         End If
+    End Function
+
+    Public Function GetTag(Tag As String) As String Implements IEntity.GetTag
+        If Tags.ContainsKey(Tag.ToUpper) = True Then
+            Return Tags(Tag.ToUpper)
+        End If
+        Return ""
     End Function
 
     Public Function GetValues() As String Implements IEntity.GetValues

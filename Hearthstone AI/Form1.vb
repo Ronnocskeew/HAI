@@ -14,6 +14,13 @@ Public Class Form1
     Private Sub Button1_Click(sender As Object, e As EventArgs) Handles Button1.Click
         For i = 1 To 300
             ReadLine()
+            Label1.Text = currLine
+            TextBox2.Text = ""
+            For Each ent In Entities
+                If ent.GetTag("zone") = "PLAY" Then
+                    TextBox2.Text = TextBox2.Text & ent.Number & vbNewLine
+                End If
+            Next
         Next
         ListBox1.Items.Clear()
         For Each Ent In Entities
@@ -30,10 +37,10 @@ Public Class Form1
         If Regex.IsMatch(Line, BlockSearch) Then
             currentBlock = Regex.Match(Line, BlockSearch).Value
         End If
-        TextBox2.Text = currentBlock
-        If Regex.IsMatch(Line, "(?<=(ID|id|Entity)=)[0-9]+") Then
-            'MsgBox(Line)
-            EntID = CInt(Regex.Match(Line, "(?<=(ID|id|Entity)=)[0-9]+").Value)
+        TextBox3.Text = currentBlock
+        Dim IntNumber As String = "(?<=(ID|id|Entity)=)[0-9]+"
+        If Regex.IsMatch(Line, IntNumber) Then
+            EntID = CInt(Regex.Match(Line, IntNumber).Value)
             Dim EntFound As Boolean
             For Each ent In Entities
                 If ent.Number = EntID Then
@@ -47,13 +54,13 @@ Public Class Form1
             End If
         End If
         If Regex.IsMatch(Line, "tag=") And Regex.IsMatch(Line, "value=") Then
-            LastEnt.SetTag(Regex.Match(Line, "(?<=tag=)\S*").Value, Regex.Match(Line, "(?<=value=)\S*").Value, Line)
+            LastEnt.SetTag(Regex.Match(Line, "(?<=tag=)\S*").Value, Regex.Match(Line, "(?<=value=)\S*").Value, Line.Split(") -")(1))
         End If
         If Regex.IsMatch(Line, "(?<=\S+)(?<!tag)(?<!value)=") Then
             Dim matches As MatchCollection = Regex.Matches(Line, "\S+(?<!tag)(?<!value)=\S*")
             For i = 0 To matches.Count - 1
                 Dim tag As String = matches.Item(i).Value
-                LastEnt.SetTag(tag.Substring(0, tag.IndexOf("=")), tag.Substring(1 + tag.IndexOf("=")), Line)
+                LastEnt.SetTag(tag.Substring(0, tag.IndexOf("=")), tag.Substring(1 + tag.IndexOf("=")), Line.Split(") -")(1))
             Next
         End If
     End Sub
@@ -74,7 +81,6 @@ Public Class Form1
         While logFileReader.EndOfStream = False
             lines.Add(logFileReader.ReadLine())
         End While
-        'lines = File.ReadAllLines("C:\Program Files (x86)\Hearthstone\Logs\Power.log")
     End Sub
 
 End Class
