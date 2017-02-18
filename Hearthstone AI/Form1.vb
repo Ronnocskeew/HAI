@@ -26,8 +26,9 @@ Public Class Form1
         If currLine >= lines.Count Then Return
         Dim Line As String = lines(currLine)
         Dim EntID As Integer
-        If Regex.IsMatch(Line, "TAG_CHANGE|HIDE_ENTITY|BLOCK_START BlockType=PLAY|BLOCK_START BlockType=TRIGGER|FULL_ENTITY|SHOW_ENTITY") Then
-            currentBlock = Regex.Match(Line, "TAG_CHANGE|HIDE_ENTITY|BLOCK_START BlockType=PLAY|BLOCK_START BlockType=TRIGGER|FULL_ENTITY|SHOW_ENTITY").Value
+        Dim BlockSearch As String = "TAG_CHANGE|HIDE_ENTITY|BLOCK_START BlockType=PLAY|BLOCK_START BlockType=ATTACK|BLOCK_START BlockType=TRIGGER|FULL_ENTITY|SHOW_ENTITY"
+        If Regex.IsMatch(Line, BlockSearch) Then
+            currentBlock = Regex.Match(Line, BlockSearch).Value
         End If
         TextBox2.Text = currentBlock
         If Regex.IsMatch(Line, "(?<=(ID|id|Entity)=)[0-9]+") Then
