@@ -1,6 +1,7 @@
 ﻿Imports System.IO
 Imports System.Text.RegularExpressions
-Public Class Form1
+Public Class cardParser
+    Dim gameBoard As New board
     Dim lines As List(Of String)
     Dim currLine As Integer = -1
     Dim LastEnt As BaseEntity
@@ -16,16 +17,23 @@ Public Class Form1
             ReadLine()
             Label1.Text = currLine + 1
             TextBox2.Text = ""
-            For Each ent In Entities
-                If ent.GetTag("zone") = "PLAY" Then
-                    TextBox2.Text = TextBox2.Text & ent.Number & vbNewLine
-                End If
-            Next
+        Next
+        gameBoard.currentGame.playerHand.Clear()
+        gameBoard.currentGame.playerBoard.Clear()
+        For Each ent In Entities
+            If ent.GetTag("zone") = "PLAY" Then
+                TextBox2.Text = TextBox2.Text & ent.Number & vbNewLine
+                gameBoard.currentGame.playerBoard.Add(ent)
+            End If
+            If ent.GetTag("zone") = "HAND" Then
+                gameBoard.currentGame.playerHand.Add(ent)
+            End If
         Next
         ListBox1.Items.Clear()
         For Each Ent In Entities
             ListBox1.Items.Add("Ent" & Ent.Number)
         Next
+        gameBoard.render()
     End Sub
 
     Private Sub ReadLine()
@@ -83,4 +91,7 @@ Public Class Form1
         End While
     End Sub
 
+    Private Sub Button3_Click(sender As Object, e As EventArgs) Handles Button3.Click
+        gameBoard.Show()
+    End Sub
 End Class
