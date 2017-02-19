@@ -22,15 +22,17 @@ Partial Class cardParser
     'Do not modify it using the code editor.
     <System.Diagnostics.DebuggerStepThrough()> _
     Private Sub InitializeComponent()
+        Me.components = New System.ComponentModel.Container()
         Me.ListBox1 = New System.Windows.Forms.ListBox()
         Me.TextBox1 = New System.Windows.Forms.TextBox()
         Me.Button1 = New System.Windows.Forms.Button()
-        Me.Button2 = New System.Windows.Forms.Button()
         Me.CheckBox1 = New System.Windows.Forms.CheckBox()
-        Me.TextBox2 = New System.Windows.Forms.TextBox()
         Me.TextBox3 = New System.Windows.Forms.TextBox()
         Me.Label1 = New System.Windows.Forms.Label()
         Me.Button3 = New System.Windows.Forms.Button()
+        Me.CheckBox2 = New System.Windows.Forms.CheckBox()
+        Me.Timer1 = New System.Windows.Forms.Timer(Me.components)
+        Me.TextBox4 = New System.Windows.Forms.TextBox()
         Me.SuspendLayout()
         '
         'ListBox1
@@ -51,26 +53,17 @@ Partial Class cardParser
         Me.TextBox1.Location = New System.Drawing.Point(260, 64)
         Me.TextBox1.Multiline = True
         Me.TextBox1.Name = "TextBox1"
-        Me.TextBox1.Size = New System.Drawing.Size(413, 264)
+        Me.TextBox1.Size = New System.Drawing.Size(206, 264)
         Me.TextBox1.TabIndex = 3
         '
         'Button1
         '
-        Me.Button1.Location = New System.Drawing.Point(260, 12)
+        Me.Button1.Location = New System.Drawing.Point(472, 10)
         Me.Button1.Name = "Button1"
-        Me.Button1.Size = New System.Drawing.Size(412, 46)
+        Me.Button1.Size = New System.Drawing.Size(200, 46)
         Me.Button1.TabIndex = 4
-        Me.Button1.Text = "Parse Some Lines"
+        Me.Button1.Text = "Turn on Timer"
         Me.Button1.UseVisualStyleBackColor = True
-        '
-        'Button2
-        '
-        Me.Button2.Location = New System.Drawing.Point(12, 12)
-        Me.Button2.Name = "Button2"
-        Me.Button2.Size = New System.Drawing.Size(66, 28)
-        Me.Button2.TabIndex = 5
-        Me.Button2.Text = "Read Log"
-        Me.Button2.UseVisualStyleBackColor = True
         '
         'CheckBox1
         '
@@ -82,16 +75,6 @@ Partial Class cardParser
         Me.CheckBox1.Text = "Isaac"
         Me.CheckBox1.UseVisualStyleBackColor = True
         '
-        'TextBox2
-        '
-        Me.TextBox2.Anchor = CType(((System.Windows.Forms.AnchorStyles.Top Or System.Windows.Forms.AnchorStyles.Bottom) _
-            Or System.Windows.Forms.AnchorStyles.Right), System.Windows.Forms.AnchorStyles)
-        Me.TextBox2.Location = New System.Drawing.Point(678, 90)
-        Me.TextBox2.Multiline = True
-        Me.TextBox2.Name = "TextBox2"
-        Me.TextBox2.Size = New System.Drawing.Size(222, 238)
-        Me.TextBox2.TabIndex = 7
-        '
         'TextBox3
         '
         Me.TextBox3.Location = New System.Drawing.Point(678, 64)
@@ -102,7 +85,7 @@ Partial Class cardParser
         'Label1
         '
         Me.Label1.AutoSize = True
-        Me.Label1.Location = New System.Drawing.Point(84, 20)
+        Me.Label1.Location = New System.Drawing.Point(84, 17)
         Me.Label1.Name = "Label1"
         Me.Label1.Size = New System.Drawing.Size(39, 13)
         Me.Label1.TabIndex = 9
@@ -117,17 +100,38 @@ Partial Class cardParser
         Me.Button3.Text = "Open Game Board"
         Me.Button3.UseVisualStyleBackColor = True
         '
+        'CheckBox2
+        '
+        Me.CheckBox2.AutoSize = True
+        Me.CheckBox2.Location = New System.Drawing.Point(70, 41)
+        Me.CheckBox2.Name = "CheckBox2"
+        Me.CheckBox2.Size = New System.Drawing.Size(77, 17)
+        Me.CheckBox2.TabIndex = 11
+        Me.CheckBox2.Text = "Test Mode"
+        Me.CheckBox2.UseVisualStyleBackColor = True
+        '
+        'Timer1
+        '
+        '
+        'TextBox4
+        '
+        Me.TextBox4.Location = New System.Drawing.Point(472, 64)
+        Me.TextBox4.Multiline = True
+        Me.TextBox4.Name = "TextBox4"
+        Me.TextBox4.Size = New System.Drawing.Size(200, 264)
+        Me.TextBox4.TabIndex = 12
+        '
         'cardParser
         '
         Me.AutoScaleDimensions = New System.Drawing.SizeF(6.0!, 13.0!)
         Me.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font
         Me.ClientSize = New System.Drawing.Size(913, 356)
+        Me.Controls.Add(Me.TextBox4)
+        Me.Controls.Add(Me.CheckBox2)
         Me.Controls.Add(Me.Button3)
         Me.Controls.Add(Me.Label1)
         Me.Controls.Add(Me.TextBox3)
-        Me.Controls.Add(Me.TextBox2)
         Me.Controls.Add(Me.CheckBox1)
-        Me.Controls.Add(Me.Button2)
         Me.Controls.Add(Me.Button1)
         Me.Controls.Add(Me.TextBox1)
         Me.Controls.Add(Me.ListBox1)
@@ -141,10 +145,11 @@ Partial Class cardParser
     Friend WithEvents ListBox1 As ListBox
     Friend WithEvents TextBox1 As TextBox
     Friend WithEvents Button1 As Button
-    Friend WithEvents Button2 As Button
     Friend WithEvents CheckBox1 As CheckBox
-    Friend WithEvents TextBox2 As TextBox
     Friend WithEvents TextBox3 As TextBox
     Friend WithEvents Label1 As Label
     Friend WithEvents Button3 As Button
+    Friend WithEvents CheckBox2 As CheckBox
+    Friend WithEvents Timer1 As Timer
+    Friend WithEvents TextBox4 As TextBox
 End Class

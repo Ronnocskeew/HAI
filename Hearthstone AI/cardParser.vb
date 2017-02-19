@@ -9,37 +9,29 @@ Public Class cardParser
     Dim Entities As List(Of BaseEntity)
     Private Sub Form1_Load(sender As Object, e As EventArgs) Handles MyBase.Load
         Entities = New List(Of BaseEntity)
+        lines = New List(Of String)
         LastEnt = New BaseEntity(0)
     End Sub
 
     Private Sub Button1_Click(sender As Object, e As EventArgs) Handles Button1.Click
-        For i = 1 To 300
-            ReadLine()
-            Label1.Text = currLine + 1
-            TextBox2.Text = ""
-        Next
-        gameBoard.currentGame.playerHand.Clear()
-        gameBoard.currentGame.playerBoard.Clear()
-        For Each ent In Entities
-            If ent.GetTag("zone") = "PLAY" Then
-                TextBox2.Text = TextBox2.Text & ent.Number & vbNewLine
-                gameBoard.currentGame.playerBoard.Add(ent)
-            End If
-            If ent.GetTag("zone") = "HAND" Then
-                gameBoard.currentGame.playerHand.Add(ent)
-            End If
-        Next
-        ListBox1.Items.Clear()
-        For Each Ent In Entities
-            ListBox1.Items.Add("Ent" & Ent.Number)
-        Next
-        gameBoard.render()
+        'ReadAllLines()
+        'ParseNewLines()
+        'CreateBoard()
+        'DisplayEntInfo()
+
+        Timer1.Interval = 1000
+        If Timer1.Enabled = True Then
+            Timer1.Stop()
+            Button1.Text = "Turn On Timer"
+        Else
+            Timer1.Start()
+            Button1.Text = "Turn Off Timer"
+        End If
+
     End Sub
 
-    Private Sub ReadLine()
-        If currLine >= lines.Count Then Return
-        Dim Line As String = lines(currLine)
-        currLine += 1
+    Private Sub ParseLine(Line As String)
+        'MsgBox("Parsing: " & Line)
         Dim EntID As Integer
         If Regex.IsMatch(Line, "CREATE_GAME") Then
             Entities = New List(Of BaseEntity)
@@ -77,24 +69,71 @@ Public Class cardParser
     End Sub
 
     Private Sub ListBox1_SelectedIndexChanged(sender As Object, e As EventArgs) Handles ListBox1.SelectedIndexChanged
-        TextBox1.Text = Entities(ListBox1.SelectedIndex).GetValues
+        Try
+            TextBox1.Text = Entities(ListBox1.SelectedIndex).GetValues
+        Catch
+
+        End Try
     End Sub
 
-    Private Sub Button2_Click(sender As Object, e As EventArgs) Handles Button2.Click
+    Private Sub Button3_Click(sender As Object, e As EventArgs) Handles Button3.Click
+        gameBoard.Show()
+    End Sub
+
+    Private Sub Timer1_Tick(sender As Object, e As EventArgs) Handles Timer1.Tick
+        ReadAllLines()
+        ParseNewLines()
+        CreateBoard()
+        DisplayEntInfo()
+    End Sub
+
+    Private Sub DisplayEntInfo()
+        ListBox1.Items.Clear()
+        For Each Ent In Entities
+            ListBox1.Items.Add("Ent" & Ent.Number)
+        Next
+    End Sub
+
+    Private Sub CreateBoard()
+        gameBoard.currentGame.playerHand.Clear()
+        gameBoard.currentGame.playerBoard.Clear()
+        For Each ent In Entities
+            If ent.GetTag("zone") = "PLAY" Then
+                'TextBox2.Text = TextBox2.Text & ent.Number & vbNewLine
+                gameBoard.currentGame.playerBoard.Add(ent)
+            End If
+            If ent.GetTag("zone") = "HAND" Then
+                gameBoard.currentGame.playerHand.Add(ent)
+            End If
+        Next
+        gameBoard.render()
+    End Sub
+
+    Private Sub ParseNewLines()
+        'MsgBox(currLine & " " & lines.Count())
+        While currLine < lines.Count()
+            ParseLine(lines(currLine))
+            currLine += 1
+            Label1.Text = currLine
+        End While
+    End Sub
+
+    Private Sub ReadAllLines()
         Dim logFileStream As FileStream
         If CheckBox1.Checked Then
             logFileStream = New FileStream("W:\game installs\Hearthstone\Logs\Power.log", FileMode.Open, FileAccess.Read, FileShare.ReadWrite)
         Else
             logFileStream = New FileStream("C:\Program Files (x86)\Hearthstone\Logs\Power.log", FileMode.Open, FileAccess.Read, FileShare.ReadWrite)
+            'logFileStream = New FileStream("C:\Users\Connor\Documents\TestDocument.txt", FileMode.Open, FileAccess.Read, FileShare.ReadWrite)
         End If
         Dim logFileReader As StreamReader = New StreamReader(logFileStream)
-        lines = New List(Of String)
+        For i = 1 To currLine
+            logFileReader.ReadLine()
+        Next
         While logFileReader.EndOfStream = False
-            lines.Add(logFileReader.ReadLine())
+            Dim Line As String = logFileReader.ReadLine()
+            lines.Add(Line)
+            'TextBox4.Text = TextBox4.Text & Line & vbNewLine
         End While
-    End Sub
-
-    Private Sub Button3_Click(sender As Object, e As EventArgs) Handles Button3.Click
-        gameBoard.Show()
     End Sub
 End Class
