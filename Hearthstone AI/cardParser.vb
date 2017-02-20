@@ -6,9 +6,9 @@ Public Class cardParser
     Dim currLine As Integer = 0
     Dim LastEnt As BaseEntity
     Dim currentBlock As String
-    Dim Entities As List(Of BaseEntity)
+    Public Entities As List(Of IEntity)
     Private Sub Form1_Load(sender As Object, e As EventArgs) Handles MyBase.Load
-        Entities = New List(Of BaseEntity)
+        Entities = New List(Of IEntity)
         lines = New List(Of String)
         LastEnt = New BaseEntity(0)
     End Sub
@@ -34,7 +34,7 @@ Public Class cardParser
         'MsgBox("Parsing: " & Line)
         Dim EntID As Integer
         If Regex.IsMatch(Line, "CREATE_GAME") Then
-            Entities = New List(Of BaseEntity)
+            Entities = New List(Of IEntity)
         End If
         Dim BlockSearch As String = "TAG_CHANGE|HIDE_ENTITY|BLOCK_START BlockType=PLAY|BLOCK_START BlockType=ATTACK|BLOCK_START BlockType=TRIGGER|FULL_ENTITY|SHOW_ENTITY"
         If Regex.IsMatch(Line, BlockSearch) Then
@@ -100,10 +100,10 @@ Public Class cardParser
         For Each ent In Entities
             If ent.GetTag("zone") = "PLAY" Then
                 'TextBox2.Text = TextBox2.Text & ent.Number & vbNewLine
-                gameBoard.currentGame.playerBoard.Add(ent)
+                gameBoard.currentGame.playerBoard.Add(New Card(ent))
             End If
             If ent.GetTag("zone") = "HAND" Then
-                gameBoard.currentGame.playerHand.Add(ent)
+                gameBoard.currentGame.playerHand.Add(New Card(ent))
             End If
         Next
         gameBoard.render()

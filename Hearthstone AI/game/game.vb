@@ -1,13 +1,13 @@
 ﻿Public Class game
-    Public playerHand As New List(Of IEntity)
+    Public playerHand As New List(Of Card)
     Public playerMana As New Integer
-    Public playerBoard As New List(Of IEntity)
+    Public playerBoard As New List(Of Card)
     Public playerHealth As New Integer
     Public playerPowerUsed As New Boolean
 
-    Public enemyHand As New List(Of IEntity)
+    Public enemyHand As New List(Of Card)
     Public enemyMana As New Integer
-    Public enemyBoard As New List(Of IEntity)
+    Public enemyBoard As New List(Of Card)
     Public enemyHealth As New Integer
     Public enemyPowerUsed As New Boolean
 

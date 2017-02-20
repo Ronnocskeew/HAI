@@ -16,9 +16,13 @@
         enemyHandListBox.Items.Clear()
     End Sub
 
-    Private Sub _populateListBox(zone As List(Of IEntity), objectCollection As ListBox.ObjectCollection)
-        For Each entity In zone
-            objectCollection.Add(entity.Number & " " & entity.GetTag("CARDID") & " " & entity.GetTag("[NAME"))
+    Private Sub _populateListBox(zone As List(Of Card), objectCollection As ListBox.ObjectCollection)
+        For Each Card In zone
+            objectCollection.Add(Card.EntID & " " & cardParser.Entities(Card.EntID).GetTag("CARDID") & " " & cardParser.Entities(Card.EntID).GetTag("[NAME"))
         Next
+    End Sub
+
+    Private Sub board_Load(sender As Object, e As EventArgs) Handles MyBase.Load
+
     End Sub
 End Class
