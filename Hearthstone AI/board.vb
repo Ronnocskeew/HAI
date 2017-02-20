@@ -18,7 +18,7 @@
 
     Private Sub _populateListBox(zone As List(Of Card), objectCollection As ListBox.ObjectCollection)
         For Each Card In zone
-            objectCollection.Add(Card.EntID & " " & cardParser.Entities(Card.EntID).GetTag("CARDID") & " " & cardParser.Entities(Card.EntID).GetTag("[NAME"))
+            objectCollection.Add(Card.EntID & " " & Card.StartingEnt.GetTag("CARDID") & " " & Card.StartingEnt.GetTag("[NAME"))
         Next
     End Sub
 
